@@ -2,6 +2,7 @@ import React, { useState ,useEffect } from "react";
 
 import { Board } from "./components/Board";
 import { ResetButton } from "./components/ResetButton";
+import {ResetAll} from "./components/ResetAll";
 import { ScoreBoard } from "./components/ScoreBoard";
 import "./App.css";
 
@@ -78,6 +79,10 @@ const App = () => {
     setGameOver(false);
     setBoard(Array(9).fill(null));
   };
+  const resetAll = () => {
+    setScores({ xScore: 0, oScore: 0 }); // Reset both players' scores
+    resetBoard(); // Reset the game board
+  };
 
   return (
     <div className="App">
@@ -85,6 +90,7 @@ const App = () => {
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />
       <ResetButton resetBoard={resetBoard} />
+      <ResetAll resetAll={resetAll}/>
     </div>
   );
 };
