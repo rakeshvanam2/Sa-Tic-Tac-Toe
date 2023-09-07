@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 
 import { Board } from "./components/Board";
 import { ResetButton } from "./components/ResetButton";
@@ -19,8 +19,17 @@ const App = () => {
 
   const [xPlaying, setXPlaying] = useState(true);
   const [board, setBoard] = useState(Array(9).fill(null));
-  const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
+  const [scores, setScores] = useState(() => {
+    // Initialize scores from localStorage or default values
+    const storedScores = JSON.parse(localStorage.getItem("scores"));
+    return storedScores || { xScore: 0, oScore: 0 };
+  });
   const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    // Save scores to localStorage whenever they change
+    localStorage.setItem("scores", JSON.stringify(scores));
+  }, [scores]);
 
   const handleBoxClick = (boxIdx) => {
     // Step 1: Update the board
